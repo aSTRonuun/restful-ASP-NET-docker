@@ -1,8 +1,8 @@
 ﻿using RestWithASPNETUdemy.Model;
 
-namespace RestWithASPNETUdemy.Services.Implementations
+namespace RestWithASPNETUdemy.Business 
 {
-    public interface IPersonService
+    public interface IPersonBusiness
     {
         Person Create(Person person);
 
@@ -13,7 +13,5 @@ namespace RestWithASPNETUdemy.Services.Implementations
         Person Update(Person person);
 
         void Delete(long id);
-
-        
     }
 }
