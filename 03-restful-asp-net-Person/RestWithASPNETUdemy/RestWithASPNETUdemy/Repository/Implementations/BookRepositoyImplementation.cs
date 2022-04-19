@@ -3,16 +3,16 @@ using RestWithASPNETUdemy.Model.Context;
 
 namespace RestWithASPNETUdemy.Repository.Implementations
 {
-    public class BookRepositoyImplementation : IBookRepository
+    public class BookRepositoryImplementation : IBookRepository
     {
         private MySQLContext _context;
 
-        public BookRepositoyImplementation(MySQLContext context)
+        public BookRepositoryImplementation(MySQLContext context)
         {
             _context = context;
         }
 
-        public Person Create(Person book)
+        public Book Create(Book book)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace RestWithASPNETUdemy.Repository.Implementations
 
         public void Delete(long id)
         {
-            var result = _context.Books.SingleOrDefault(x => x.Equals(id));
+            var result = _context.Books.SingleOrDefault(x => x.Id.Equals(id));
             if (result != null)
             {
                 try
@@ -46,20 +46,20 @@ namespace RestWithASPNETUdemy.Repository.Implementations
 
         public bool Exists(long id)
         {
-            return _context.Books.Any(x => x.Equals(id));
+            return _context.Books.Any(x => x.Id.Equals(id));
         }
 
-        public List<Person> FindAll()
+        public List<Book> FindAll()
         {
             return _context.Books.ToList();
         }
 
-        public Person FindByID(long id)
+        public Book FindByID(long id)
         {
-            return _context.Books.SingleOrDefault(_x => _x.Equals(id));
+            return _context.Books.SingleOrDefault(x => x.Id.Equals(id));
         }
 
-        public Person Update(Person book)
+        public Book Update(Book book)
         {
             if(!Exists(book.Id)) return null;
 

@@ -2,7 +2,7 @@
 
 namespace RestWithASPNETUdemy.Model
 {
-    [Table("book")]
+    [Table("books")]
     public class Book
     {
         [Column("id")]
