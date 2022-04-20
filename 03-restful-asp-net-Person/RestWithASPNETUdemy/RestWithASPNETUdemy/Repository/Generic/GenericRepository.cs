@@ -41,14 +41,14 @@ namespace RestWithASPNETUdemy.Repository.Generic
 
         public T Update(T item)
         {
-            if (!Exists(item.Id)) return null;
-
             var result = dataset.SingleOrDefault(p => p.Id == item.Id);
+            Console.WriteLine(result);
             if (result != null)
             {
                 try
                 {
-                    _context.Entry(item).CurrentValues.SetValues(result);
+                    Console.WriteLine(result);
+                    _context.Entry(result).CurrentValues.SetValues(item);
                     _context.SaveChanges();
                     return result;
                 }
@@ -79,7 +79,6 @@ namespace RestWithASPNETUdemy.Repository.Generic
         public bool Exists(long id)
         {
             return dataset.Any(p => p.Id == (id));
-
         }
     }
 }
