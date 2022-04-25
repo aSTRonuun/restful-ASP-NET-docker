@@ -6,8 +6,6 @@ using RestWithASPNETUdemy.Repository;
 using RestWithASPNETUdemy.Repository.Implementations;
 using Serilog;
 using RestWithASPNETUdemy.Repository.Generic;
-using RestWithASPNETUdemy.Hypermedia.Filters;
-using RestWithASPNETUdemy.Hypermedia.Enricher;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,21 +14,6 @@ Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 // Add services to the container.
 
 builder.Services.AddControllers();
-
-// Add suported for formatters
-builder.Services.AddMvc(options =>
-{
-    options.RespectBrowserAcceptHeader = true;
-
-    options.FormatterMappings.SetMediaTypeMappingForFormat("xml", "application/xml");
-    options.FormatterMappings.SetMediaTypeMappingForFormat("json", "application/json");
-})
-.AddXmlSerializerFormatters();
-
-var filterOptions = new HyperMediaFilterOptions();
-filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
-
-builder.Services.AddSingleton(filterOptions);
 
 // Versiong API
 builder.Services.AddApiVersioning();
@@ -76,18 +59,9 @@ void MigrationDatabase(string connection)
 
 app.UseHttpsRedirection();
 
-app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllers();
-
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-    endpoints.MapControllerRoute("DefaultApi", "{controller=Values}/{id?}");
-});
 
 app.Run();
 
