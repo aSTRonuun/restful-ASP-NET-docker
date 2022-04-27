@@ -8,6 +8,8 @@ using Serilog;
 using RestWithASPNETUdemy.Repository.Generic;
 using RestWithASPNETUdemy.Hypermedia.Filters;
 using RestWithASPNETUdemy.Hypermedia.Enricher;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Rewrite;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,13 @@ Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddCors(options => options.AddDefaultPolicy(builder =>
+{
+    builder.AllowAnyOrigin();
+    builder.AllowAnyMethod();
+    builder.AllowAnyHeader();
+}));
 
 // Add suported for formatters
 builder.Services.AddMvc(options =>
@@ -34,6 +43,21 @@ builder.Services.AddSingleton(filterOptions);
 
 // Versiong API
 builder.Services.AddApiVersioning();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "REST API's From 0 to Azure with ASP.NET Core 5 and Docker",
+        Version = "v1",
+        Description = "API RESTful developed in course 'REST API's From 0 to Azure with ASP.NET Core 5 and Docker'",
+        Contact = new OpenApiContact
+        {
+            Name = "Vitor Alves",
+            Url = new Uri("https://github.com/aSTRonuun")
+        }
+    });
+});
 
 //Dependency Injection
 builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
@@ -73,15 +97,26 @@ void MigrationDatabase(string connection)
 }
 
 // Configure the HTTP request pipeline.
-
 app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseCors();
+
+app.UseSwagger();
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "REST API's From 0 to Azure with ASP.NET Core 5 and Docker - v1");
+});
+
+var option = new RewriteOptions();
+option.AddRedirect("^$", "swagger");
+app.UseRewriter(option);
+
 app.UseAuthorization();
 
 app.MapControllers();
-
 
 app.UseEndpoints(endpoints =>
 {
