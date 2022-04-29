@@ -18,7 +18,9 @@ namespace RestWithASPNETUdemy.Repository
         public User ValidateCredentials(UserVO user)
         {
             var pass = ComputeHash(user.Password, SHA256.Create());
-            return _context.Users.FirstOrDefault(u => (u.UserName == user.UserName) && (u.Password == user.Password));
+            var info = _context.Users.FirstOrDefault(u => u.UserName == user.UserName && u.Password == pass);
+
+            return info;
         }
 
         private string ComputeHash(string input, SHA256 algorithm)
