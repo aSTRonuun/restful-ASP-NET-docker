@@ -44,7 +44,7 @@ namespace RestWithASPNETUdemy.Hypermedia
                     ConcurrentBag<T> bag = new ConcurrentBag<T>(collection);
                     Parallel.ForEach(bag, (element) =>
                     {
-                        EnrichModel(element, urlHelper);
+                        _ = EnrichModel(element, urlHelper);
                     });
                 }
                 await Task.FromResult<object>(null);
