@@ -24,7 +24,7 @@ Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddCors(options => options.AddDefaultPolicy(builder =>
 {
