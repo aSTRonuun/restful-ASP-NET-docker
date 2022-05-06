@@ -32,7 +32,21 @@ public class UserRepository : IUseRepository
 
     public User ValidateCredentials(string userName)
     {
-        return _context.Users.SingleOrDefault(u => u.UserName == userName);
+        var user =_context.Users.SingleOrDefault(u => u.UserName == userName);
+        if (user == null)
+            return null;
+        return user;
+    }
+
+    public bool RovokeToken(string userName)
+    {
+        var user = _context.Users.SingleOrDefault(u => u.UserName == userName);
+
+        if(user == null) { return false; }
+
+        user.RefreshToken = "null";
+        _context.SaveChanges();
+        return true;
     }
 
     public User RefreshUserInfo(User user)

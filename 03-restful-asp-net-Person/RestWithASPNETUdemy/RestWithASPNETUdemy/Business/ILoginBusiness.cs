@@ -8,5 +8,6 @@ public interface ILoginBusiness
 
     TokenVO ValidateCredentials(TokenVO token);
 
+    bool RovokeToken(string userName);
 
 }

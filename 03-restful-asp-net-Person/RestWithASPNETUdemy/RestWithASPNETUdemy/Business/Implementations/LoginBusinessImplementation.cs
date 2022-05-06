@@ -67,7 +67,7 @@ public class LoginBusinessImplementation : ILoginBusiness
         var user = _repository.ValidateCredentials(username);
 
         if (user == null ||
-            user.RefreshToken == null ||
+            user.RefreshToken == "null" ||
             user.RefreshTokenExpiryTime <= DateTime.Now) return null;
 
         accessToken = _tokenService.GenerateAccessToken(principal.Claims);
@@ -88,5 +88,10 @@ public class LoginBusinessImplementation : ILoginBusiness
             refreshToken
             );
 
+    }
+
+    public bool RovokeToken(string userName)
+    {
+        return _repository.RovokeToken(userName);
     }
 }

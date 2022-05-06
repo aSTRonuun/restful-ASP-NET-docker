@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASPNETUdemy.Business;
 using RestWithASPNETUdemy.Data.VO;
@@ -41,5 +42,18 @@ public class AuthController : ControllerBase
         if (token == null) return BadRequest("Invalid client request");
 
         return Ok(token);
+    }
+
+    [HttpGet]
+    [Route("revoke")]
+    [Authorize("Bearer")]
+    public IActionResult Revoke()
+    {
+        var userName = User.Identity.Name;
+        var result = _loginBusiness.RovokeToken(userName);
+
+        if (!result) return BadRequest("Invalid client request");
+
+        return NoContent();
     }
 }

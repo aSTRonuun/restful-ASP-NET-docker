@@ -9,6 +9,8 @@ namespace RestWithASPNETUdemy.Repository
 
         User ValidateCredentials(string userName);
 
+        bool RovokeToken(string userName);
+
         User RefreshUserInfo(User user);
     }
 }
