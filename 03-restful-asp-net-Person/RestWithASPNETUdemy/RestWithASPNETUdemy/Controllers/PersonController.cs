@@ -48,6 +48,21 @@ namespace RestWithASPNETUdemy.Controllers
 
             return Ok(person);
         }
+        
+        [HttpGet("findPersonByName")]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public IActionResult Get([FromQuery] string? firstName, [FromQuery] string? lastName)
+        {
+            var person = _personBusiness.FindByName(firstName, lastName);
+
+            if (person == null) return NotFound();
+
+            return Ok(person);
+        }
 
         [HttpPost]
         [ProducesResponseType((200), Type = typeof(PersonVO))]
