@@ -1,4 +1,5 @@
 ﻿using RestWithASPNETUdemy.Data.VO;
+using RestWithASPNETUdemy.Hypermedia.Utils;
 
 namespace RestWithASPNETUdemy.Business 
 {
@@ -11,6 +12,8 @@ namespace RestWithASPNETUdemy.Business
         List<PersonVO> FindAll();
 
         List<PersonVO> FindByName(string firstName, string lastName);
+
+        PageSearchVO<PersonVO> FindWithPagedSearch(string name, string sortDirection, int pageSize, int page);
 
         PersonVO Update(PersonVO person);
 
