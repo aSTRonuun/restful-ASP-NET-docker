@@ -99,9 +99,7 @@ namespace RestWithASPNETUdemy.Repository.Generic
                     result = command.ExecuteScalar().ToString();
                 }
             }
-
             return int.Parse(result);
-            
         }
     }
 }
