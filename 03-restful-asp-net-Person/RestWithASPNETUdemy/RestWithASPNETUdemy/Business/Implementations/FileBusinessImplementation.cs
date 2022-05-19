@@ -15,7 +15,8 @@ namespace RestWithASPNETUdemy.Business.Implementations
 
         public byte[] GetFile(string fileName)
         {
-            throw new NotImplementedException();
+            var filePath = _basePath + fileName;
+            return File.ReadAllBytes(filePath);
         }
 
         public async Task<FileDatailsVO> SaveFileToDisk(IFormFile file)
@@ -43,9 +44,14 @@ namespace RestWithASPNETUdemy.Business.Implementations
             return fileDetail;
         }
 
-        public Task<List<FileDatailsVO>> SaveFilesToDisk(IList<IFormFile> files)
+        public async Task<List<FileDatailsVO>> SaveFilesToDisk(IList<IFormFile> files)
         {
-            throw new NotImplementedException();
+            List<FileDatailsVO> list = new List<FileDatailsVO>();
+            foreach(var file in files)
+            {
+                list.Add(await SaveFileToDisk(file));
+            }
+            return list;
         }
     }
 }

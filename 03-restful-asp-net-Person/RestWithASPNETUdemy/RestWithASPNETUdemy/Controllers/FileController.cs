@@ -22,12 +22,45 @@ namespace RestWithASPNETUdemy.Controllers
         [ProducesResponseType((400))]
         [ProducesResponseType((401))]
         [Produces("application/json")]
-        public async Task<IActionResult> UploadOnFile([FromForm] IFormFile file)
+        public async Task<IActionResult> UploadOneFile([FromForm] IFormFile file)
         {
             FileDatailsVO detail = await _fileBusiness.SaveFileToDisk(file);
 
             return new OkObjectResult(detail);
 
+        }
+
+        [HttpPost("uploadMultipleFiles")]
+        [ProducesResponseType((200), Type = typeof(List<FileDatailsVO>))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
+        [Produces("application/json")]
+        public async Task<IActionResult> UploadManyFile([FromForm] List<IFormFile> files)
+        {
+            List<FileDatailsVO> details = await _fileBusiness.SaveFilesToDisk(files);
+
+            return new OkObjectResult(details);
+
+        }
+
+
+        [HttpGet("downloadFile/{fileName}")]
+        [ProducesResponseType((200), Type = typeof(byte[]))]
+        [ProducesResponseType((204))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
+        [Produces("application/octet-stream")]
+        public async Task<IActionResult> GetFileAsync(string fileName)
+        {
+            byte[] buffer = _fileBusiness.GetFile(fileName);
+            if (buffer != null)
+            {
+                HttpContext.Response.ContentType =
+                    $"application/{Path.GetExtension(fileName).Replace(".", "")}";
+                HttpContext.Response.Headers.Add("content-length", buffer.Length.ToString());
+                await HttpContext.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+            }
+            return new ContentResult();
         }
 
     }
