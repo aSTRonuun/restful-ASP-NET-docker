@@ -125,10 +125,10 @@ builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connecti
 
 var app = builder.Build();
 
-if(app.Environment.IsDevelopment())
-{
-    MigrationDatabase(connection);
-}
+//if(app.Environment.IsDevelopment())
+//{
+//    MigrationDatabase(connection);
+//}
 
 void MigrationDatabase(string connection)
 {
