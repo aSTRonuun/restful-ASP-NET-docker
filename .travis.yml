@@ -5,12 +5,12 @@ mono: none
 dotnet: 6.0
 services: docker
 before_install:
-  -  cd 03-restful-asp-net-Person/
+  -  cd 03-restful-asp-net-Person/RestWithASPNETUdemy
   - echo "We are in the right folder!"
 script:
   - docker-compose build
 before_deploy:
-  - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --pasword-stdin
+  - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
 deploy:
   provider: script
   script:
