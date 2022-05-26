@@ -5,7 +5,7 @@ mono: none
 dotnet: 6.0
 services: docker
 before_install:
-  -  cd 03-restful-asp-net-Person/RestWithASPNETUdemy
+  - cd 03-restful-asp-net-Person/RestWithASPNETUdemy
   - echo "We are in the right folder!"
 script:
   - docker-compose build
@@ -21,5 +21,5 @@ deploy:
   on:
     branch: main
 notifications:
-  email:false
+  email: false
     
