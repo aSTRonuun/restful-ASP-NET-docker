@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -125,10 +124,10 @@ builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connecti
 
 var app = builder.Build();
 
-//if(app.Environment.IsDevelopment())
-//{
-//    MigrationDatabase(connection);
-//}
+if (app.Environment.IsDevelopment())
+{
+    MigrationDatabase(connection);
+}
 
 void MigrationDatabase(string connection)
 {
